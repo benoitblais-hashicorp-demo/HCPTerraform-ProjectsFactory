@@ -32,6 +32,14 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
+### <a name="input_Project_name"></a> [Project\_name](#input\_Project\_name)
+
+Description: (Optional) Name of the terraform Project used by the Projects factory.
+
+Type: `string`
+
+Default: `"terraform-tfe-Projectsfactory"`
+
 ### <a name="input_github_teams"></a> [github\_teams](#input\_github\_teams)
 
 Description:   (Optional) The github\_teams block supports the following:  
@@ -54,13 +62,13 @@ Default:
 ```json
 [
   {
-    "description": "This group grant admin access to the Terraform Modules repository.",
-    "name": "Terraform-Modules-Owners",
+    "description": "This group grant admin access to the Terraform Projects repository.",
+    "name": "Terraform-Projects-Owners",
     "permission": "admin"
   },
   {
-    "description": "This group grant write access to the Terraform Modules repository.",
-    "name": "Terraform-Modules-Contributors",
+    "description": "This group grant write access to the Terraform Projects repository.",
+    "name": "Terraform-Projects-Contributors",
     "permission": "push"
   }
 ]
@@ -68,19 +76,11 @@ Default:
 
 ### <a name="input_github_template"></a> [github\_template](#input\_github\_template)
 
-Description: (Optional) The GitHub repository to use as a template when creating new repositories. The repository must be a template repository. If not provided, the default template provided by the module will be used.
+Description: (Optional) The GitHub repository to use as a template when creating new repositories. The repository must be a template repository. If not provided, the default template provided by the Project will be used.
 
 Type: `string`
 
 Default: `null`
-
-### <a name="input_module_name"></a> [module\_name](#input\_module\_name)
-
-Description: (Optional) Name of the terraform module used by the modules factory.
-
-Type: `string`
-
-Default: `"terraform-tfe-modulesfactory"`
 
 ### <a name="input_oauth_client_name"></a> [oauth\_client\_name](#input\_oauth\_client\_name)
 
@@ -104,7 +104,7 @@ Description: (Optional) Name of the project.
 
 Type: `string`
 
-Default: `"Terraform Modules Factory"`
+Default: `"Terraform Projects Factory"`
 
 ### <a name="input_project_tags"></a> [project\_tags](#input\_project\_tags)
 
