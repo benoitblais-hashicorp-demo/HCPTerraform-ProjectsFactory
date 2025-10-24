@@ -2,7 +2,50 @@
 Code to provision and manage HCP Terraform projects using Terraform code (IaC).
 
 <!-- BEGIN_TF_DOCS -->
+# HCP Terraform Projects Factory
 
+Code which manages configuration and life-cycle of all the HCP Terraform
+projects factory. It is designed to be used from a dedicated
+API-Driven HCP Terraform workspace that would provision and manage the
+configuration using Terraform code (IaC).
+
+> Project creation and management is facilitated through a no-code
+> module workflow that creates and configures the required the HCP Terraform project,
+> the teams, the variable set with the variables associate with it. Each no-code
+> module must be provisioned within the dedicated project to ensure proper variable
+> input configuration and management.
+
+## Permissions
+
+### HCP Terraform Permissions
+
+To manage the agent pool resources, provide a user token from an account with
+appropriate permissions. This user should have the `Manage Projects`,
+`Manage Workspaces`, `Manage Teams`, `Manage Membership`, and `Manage Organization Access`
+permission. Alternatively, you can use a token from a team instead of a user token.
+
+## Authentication
+
+### HCP Terraform Authentication
+
+The HCP Terraform provider requires a HCP Terraform/Terraform Enterprise API token in
+order to manage resources.
+
+There are several ways to provide the required token:
+
+* Set the `token` argument in the provider configuration. You can set the token argument in the provider configuration. Use an
+input variable for the token.
+* Set the `TFE_TOKEN` environment variable. The provider can read the TFE\\_TOKEN environment variable and the token stored there
+to authenticate.
+
+## Features
+
+* Manages configuration and life-cycle of HCP Terraform resources:
+  * Project
+  * Variable Set
+    * Variables
+  * Teams
+    * Team token
 
 ## Documentation
 
@@ -16,7 +59,13 @@ The following requirements are needed by this module:
 
 ## Modules
 
-No modules.
+The following Modules are called:
+
+### <a name="module_projects_factory_team_hcp"></a> [projects\_factory\_team\_hcp](#module\_projects\_factory\_team\_hcp)
+
+Source: app.terraform.io/benoitblais-hashicorp/team/tfe
+
+Version: 1.0.0
 
 ## Required Inputs
 
@@ -31,64 +80,6 @@ Type: `string`
 ## Optional Inputs
 
 The following input variables are optional (have default values):
-
-### <a name="input_Project_name"></a> [Project\_name](#input\_Project\_name)
-
-Description: (Optional) Name of the terraform Project used by the Projects factory.
-
-Type: `string`
-
-Default: `"terraform-tfe-Projectsfactory"`
-
-### <a name="input_github_teams"></a> [github\_teams](#input\_github\_teams)
-
-Description:   (Optional) The github\_teams block supports the following:  
-    name        : (Required) The name of the team.  
-    description : (Optional) A description of the team.  
-    permission  : (Optional) The permissions of team members regarding the repository. Must be one of `pull`, `triage`, `push`, `maintain`, `admin` or the name of an existing custom repository role within the organisation.
-
-Type:
-
-```hcl
-list(object({
-    name        = string
-    description = optional(string)
-    permission  = optional(string, "pull")
-  }))
-```
-
-Default:
-
-```json
-[
-  {
-    "description": "This group grant admin access to the Terraform Projects repository.",
-    "name": "Terraform-Projects-Owners",
-    "permission": "admin"
-  },
-  {
-    "description": "This group grant write access to the Terraform Projects repository.",
-    "name": "Terraform-Projects-Contributors",
-    "permission": "push"
-  }
-]
-```
-
-### <a name="input_github_template"></a> [github\_template](#input\_github\_template)
-
-Description: (Optional) The GitHub repository to use as a template when creating new repositories. The repository must be a template repository. If not provided, the default template provided by the Project will be used.
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_oauth_client_name"></a> [oauth\_client\_name](#input\_oauth\_client\_name)
-
-Description: (Optional) Name of the OAuth client.
-
-Type: `string`
-
-Default: `"GitHub"`
 
 ### <a name="input_project_description"></a> [project\_description](#input\_project\_description)
 
@@ -119,6 +110,8 @@ Default: `null`
 The following resources are used by this module:
 
 - [tfe_project.this](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/project) (resource)
+- [tfe_variable.organization](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable) (resource)
+- [tfe_variable.tfe_token](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable) (resource)
 - [tfe_variable_set.this](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable_set) (resource)
 
 ## Outputs
