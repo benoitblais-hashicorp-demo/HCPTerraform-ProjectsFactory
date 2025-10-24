@@ -18,28 +18,28 @@ variable "github_teams" {
   }))
   nullable = false
   default = [{
-    name        = "Terraform-Modules-Owners"
-    description = "This group grant admin access to the Terraform Modules repository."
+    name        = "Terraform-Projects-Owners"
+    description = "This group grant admin access to the Terraform Projects repository."
     permission  = "admin"
     },
     {
-      name        = "Terraform-Modules-Contributors"
-      description = "This group grant write access to the Terraform Modules repository."
+      name        = "Terraform-Projects-Contributors"
+      description = "This group grant write access to the Terraform Projects repository."
       permission  = "push"
   }]
 }
 
 variable "github_template" {
-  description = "(Optional) The GitHub repository to use as a template when creating new repositories. The repository must be a template repository. If not provided, the default template provided by the module will be used."
+  description = "(Optional) The GitHub repository to use as a template when creating new repositories. The repository must be a template repository. If not provided, the default template provided by the Project will be used."
   type        = string
   nullable    = true
   default     = null
 }
 
-variable "module_name" {
-  description = "(Optional) Name of the terraform module used by the modules factory."
+variable "Project_name" {
+  description = "(Optional) Name of the terraform Project used by the Projects factory."
   type        = string
-  default     = "terraform-tfe-modulesfactory"
+  default     = "terraform-tfe-Projectsfactory"
 }
 
 variable "oauth_client_name" {
@@ -60,7 +60,7 @@ variable "project_name" {
   description = "(Optional) Name of the project."
   type        = string
   nullable    = true
-  default     = "Terraform Modules Factory"
+  default     = "Terraform Projects Factory"
 }
 
 variable "project_tags" {
