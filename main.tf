@@ -43,9 +43,9 @@ module "projects_factory_team_hcp" {
 # The following resource blocks are used to create variables that will be stored into the variable set previously created.
 
 resource "tfe_variable" "tfe_token" {
-  count           = length(module.modules_factory_team_hcp) > 0 ? 1 : 0
+  count           = length(module.projects_factory_team_hcp) > 0 ? 1 : 0
   key             = "TFE_TOKEN"
-  value           = module.modules_factory_team_hcp[0].token
+  value           = module.projects_factory_team_hcp[0].token
   category        = "env"
   sensitive       = true
   variable_set_id = tfe_variable_set.this[0].id
