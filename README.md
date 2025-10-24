@@ -1,6 +1,3 @@
-# HCPTerraform-ProjectsFactory
-Code to provision and manage HCP Terraform projects using Terraform code (IaC).
-
 <!-- BEGIN_TF_DOCS -->
 # HCP Terraform Projects Factory
 
