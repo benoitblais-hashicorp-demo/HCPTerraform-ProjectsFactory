@@ -5,7 +5,7 @@ projects factory. It is designed to be used from a dedicated
 API-Driven HCP Terraform workspace that would provision and manage the
 configuration using Terraform code (IaC).
 
-> Project creation and management is facilitated through a no-code 
+> Project creation and management is facilitated through a no-code
 > module workflow that creates and configures the required the HCP Terraform project,
 > the teams, the variable set with the variables associate with it. Each no-code
 > module must be provisioned within the dedicated project to ensure proper variable
@@ -16,7 +16,7 @@ configuration using Terraform code (IaC).
 ### HCP Terraform Permissions
 
 To manage the agent pool resources, provide a user token from an account with
-appropriate permissions. This user should have the `Manage Projects`, 
+appropriate permissions. This user should have the `Manage Projects`,
 `Manage Workspaces`, `Manage Teams`, `Manage Membership`, and `Manage Organization Access`
 permission. Alternatively, you can use a token from a team instead of a user token.
 
