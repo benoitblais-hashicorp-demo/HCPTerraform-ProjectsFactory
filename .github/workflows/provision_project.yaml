@@ -131,7 +131,7 @@ jobs:
           json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "project_name","value": "'"${NAME}"'","category": "terraform"}}'"${sso_write_team_id}""${sso_read_team_id}""${variables}"']}}}}'
           json_payload=$(echo "${json_string}" | jq)
           echo "${json_payload}"
-          run=$(curl -sS --request POST --url "${tfc_api_url}/no-code-Projects/${NO_CODE_ID}/workspaces" \
+          run=$(curl -sS --request POST --url "${tfc_api_url}/no-code-modules/${NO_CODE_ID}/workspaces" \
           --header "${auth_header}" --header "${content_header}" --data "${json_payload}")
           if ! [[ "${run}" =~ "{\"data\":" ]]; then
             echo "ERROR    | Unable to create workspace."
@@ -149,7 +149,6 @@ jobs:
 
       - name: Provision Project
         env:
-          PROVIDER: ${{ github.event.inputs.provider }}
           NAME: ${{ github.event.inputs.name }}
           WORKSPACE_ID: ${{ steps.provision.outputs.workspace_id }}
           WORKSPACE_NAME: ${{ steps.provision.outputs.workspace_name }}
@@ -157,7 +156,7 @@ jobs:
           echo "INFO     | Build required variables."
           tfc_api_url="https://app.terraform.io/api/v2"
           auth_header="Authorization: Bearer ${TFC_API_TOKEN}"
-          content_header="Content-Type: application/vnd.api+json" 
+          content_header="Content-Type: application/vnd.api+json"
           json_string='{"data":{"id":"'"WORKSPACE_ID"'","type":"workspaces","attributes":{"structured-run-output-enabled":false,"terraform-version": "latest"}}}'
           json_payload=$(echo "${json_string}" | jq)
           run=$(curl -sS --request PATCH --url "${tfc_api_url}/organizations/${TFC_ORGANIZATION}/workspaces/${WORKSPACE_NAME}" \
