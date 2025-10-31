@@ -111,7 +111,8 @@ jobs:
           tfc_api_url="https://app.terraform.io/api/v2"
           auth_header="Authorization: Bearer ${TFC_API_TOKEN}"
           content_header="Content-Type: application/vnd.api+json"
-          workspace_name="${NAME}-no-code"
+          # convert name to lowercase and replace spaces with hyphens
+          workspace_name=$(echo "${NAME}-no-code" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
           echo "INFO     | Create workspace ${workspace_name} in project ${TFC_PROJECT}."
           if [ -z "${SSO_READ_TEAM_ID}" ]; then
             sso_read_team_id=""
