@@ -130,6 +130,7 @@ jobs:
           fi
           json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "project_name","value": "'"${NAME}"'","category": "terraform"}},'"${sso_write_team_id}"','"${sso_read_team_id}"','"${variables}"']}}}}'
           json_payload=$(echo "${json_string}" | jq)
+          echo "${json_payload}"
           run=$(curl -sS --request POST --url "${tfc_api_url}/no-code-Projects/${NO_CODE_ID}/workspaces" \
           --header "${auth_header}" --header "${content_header}" --data "${json_payload}")
           if ! [[ "${run}" =~ "{\"data\":" ]]; then
