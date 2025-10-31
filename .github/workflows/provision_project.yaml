@@ -33,8 +33,8 @@ jobs:
       TFC_API_TOKEN: ${{ secrets.TFE_TOKEN }}
       TFC_ORGANIZATION: "benoitblais-hashicorp"
       TFC_PROJECT: "Terraform Projects Factory"
-      TFC_Project_NAME: "Projectsfactory"
-      TFC_Project_PROVIDER: "tfe"
+      TFC_MODULE_NAME: "Projectsfactory"
+      TFC_MODULE_PROVIDER: "tfe"
     steps:
 
       - name: Retreive no-code Project ID
@@ -44,26 +44,26 @@ jobs:
           tfc_api_url="https://app.terraform.io/api/v2"
           auth_header="Authorization: Bearer ${TFC_API_TOKEN}"
           content_header="Content-Type: application/vnd.api+json"
-          echo "INFO     | Get Project information."
+          echo "INFO     | Get module information."
           {
-            run=$(curl -sS --request GET --url "${tfc_api_url}/organizations/${TFC_ORGANIZATION}/registry-Projects/private/${TFC_ORGANIZATION}/${TFC_Project_NAME}/${TFC_Project_PROVIDER}" \
+            run=$(curl -sS --request GET --url "${tfc_api_url}/organizations/${TFC_ORGANIZATION}/registry-modules/private/${TFC_ORGANIZATION}/${TFC_MODULE_NAME}/${TFC_MODULE_PROVIDER}" \
             --header "${auth_header}" --header "${content_header}")
             if ! [[ "${run}" =~ "{\"data\":" ]]; then
-              echo "ERROR    | Unable to to get Project information."
+              echo "ERROR    | Unable to to get module information."
               echo "${run}"
               exit 1
             fi
           } ||
           {
-            echo "ERROR    | An error occurred during the API call to get Project information."
+            echo "ERROR    | An error occurred during the API call to get module information."
             exit 1
           }
-          no_code_id=$(echo "${run}" | jq -r '.data.relationships."no-code-Projects".data[].id')
+          no_code_id=$(echo "${run}" | jq -r '.data.relationships."no-code-modules".data[].id')
           if [ -z "${no_code_id}" ] || [ "${no_code_id}" == "null" ]; then
-            echo "ERROR    | Unable to find no-code Project ID."
+            echo "ERROR    | Unable to find no-code module ID."
             exit 1
           else
-            echo "INFO     | No-code Project ID is ${no_code_id}."
+            echo "INFO     | No-code module ID is ${no_code_id}."
             echo "NO_CODE_ID=${no_code_id}" >> "$GITHUB_OUTPUT"
           fi
 
