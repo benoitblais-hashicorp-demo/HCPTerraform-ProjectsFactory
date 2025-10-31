@@ -116,19 +116,19 @@ jobs:
           if [ -z "${SSO_READ_TEAM_ID}" ]; then
             sso_read_team_id=""
           else
-            sso_read_team_id='{"type":"vars","attributes":{"key":"sso_read_team_id","value":"'"${SSO_READ_TEAM_ID}"'","category":"terraform"}}'
+            sso_read_team_id=',{"type":"vars","attributes":{"key":"sso_read_team_id","value":"'"${SSO_READ_TEAM_ID}"'","category":"terraform"}}'
           fi
           if [ -z "${SSO_WRITE_TEAM_ID}" ]; then
             sso_write_team_id=""
           else
-            sso_write_team_id='{"type":"vars","attributes":{"key":"sso_write_team_id","value":"'"${SSO_WRITE_TEAM_ID}"'","category":"terraform"}}'
+            sso_write_team_id=',{"type":"vars","attributes":{"key":"sso_write_team_id","value":"'"${SSO_WRITE_TEAM_ID}"'","category":"terraform"}}'
           fi
           if [ -z "${VARIABLES}" ]; then
             variables=""
           else
-            variables='{"type":"vars","attributes":{"key":"variables","value":"'"${VARIABLES}"'","category":"terraform","hcl":"true"}}'
+            variables=',{"type":"vars","attributes":{"key":"variables","value":"'"${VARIABLES}"'","category":"terraform","hcl":"true"}}'
           fi
-          json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "project_name","value": "'"${NAME}"'","category": "terraform"}},'"${sso_write_team_id}"','"${sso_read_team_id}"','"${variables}"']}}}}'
+          json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "project_name","value": "'"${NAME}"'","category": "terraform"}}'"${sso_write_team_id}""${sso_read_team_id}""${variables}"']}}}}'
           json_payload=$(echo "${json_string}" | jq)
           echo "${json_payload}"
           run=$(curl -sS --request POST --url "${tfc_api_url}/no-code-Projects/${NO_CODE_ID}/workspaces" \
